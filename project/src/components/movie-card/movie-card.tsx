@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export type MoviePropsType = {
   id: number,
   name: string,
@@ -19,7 +21,7 @@ export type MoviePropsType = {
 }
 
 export function MovieCard(props: MoviePropsType): JSX.Element {
-  const { name, posterImage } = props;
+  const { name, posterImage, id } = props;
 
   return (
     <article className="small-film-card catalog__films-card">
@@ -29,7 +31,7 @@ export function MovieCard(props: MoviePropsType): JSX.Element {
         />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
       </h3>
     </article>
   );
