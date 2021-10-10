@@ -1,14 +1,30 @@
-export function Player(): JSX.Element {
+import { RouteComponentProps } from 'react-router-dom';
+import { movies } from '../../mocks/movies';
+import { Redirect } from 'react-router';
+
+type MatchParams = {
+  id: string;
+}
+
+export function Player({ match }: RouteComponentProps<MatchParams>): JSX.Element {
+  const { id } = match.params;
+
+  const currentMovie = movies[+id];
+
+  if (!currentMovie) {
+    return <Redirect to='/' />;
+  }
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={currentMovie.videoLink} className="player__video" poster="img/player-poster.jpg" />
 
       <button type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
+            <progress className="player__progress" value="30" max="100" />
             <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
           </div>
           <div className="player__time-value">1:30:29</div>

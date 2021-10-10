@@ -1,14 +1,14 @@
 import App from './components/app/app';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import films from './mocks/movies.json';
+import { Movies } from './mocks/movies';
 import genres from './mocks/genres.json';
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      movies={films}
-      currentMovie={films[0]}
+      movies={Movies}
+      currentMovie={Movies[0]}
       genres={genres}
     />
   </React.StrictMode>,
