@@ -68,23 +68,22 @@ export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Elem
         <form action="#" className="add-review__form" onSubmit={handleSubmitForm}>
           <div className="rating">
             <div className="rating__stars">
-              {Array(10).fill(null).reverse().map((_, idx) => {
-                const index = idx + 1;
-                return (
+              { Array.from({length: 10}, (_, i) => i+1)
+                .reverse()
+                .map((index) => (
                   <Fragment key={index}>
                     <input
                       onChange={handleChangeControls}
                       className="rating__input"
-                      id={`star-${idx}`}
+                      id={`star-${index}`}
                       type="radio"
                       name="rating"
                       checked={index.toString() === stateForm.rating}
                       value={index}
                     />
-                    <label className="rating__label" htmlFor={`star-${idx}`}>Rating {index}</label>
+                    <label className="rating__label" htmlFor={`star-${index}`}>Rating {index}</label>
                   </Fragment>
-                );
-              })}
+                ))}
             </div>
           </div>
 
