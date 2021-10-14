@@ -17,7 +17,10 @@ export type MoviePropsType = {
   runTime: number,
   genre: string | string[],
   released: number,
-  isFavorite: boolean
+  isFavorite: boolean,
+  isActive?: boolean,
+  onMouseEnter?: (id: number) => void,
+  onMouseLeave?: () => void
 }
 
 export function MovieCard(props: MoviePropsType): JSX.Element {

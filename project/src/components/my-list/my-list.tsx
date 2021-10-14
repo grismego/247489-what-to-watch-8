@@ -1,9 +1,8 @@
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
-import { MoviesList } from '../movies-list/movies-list';
-import movies from '../../mocks/movies.json';
+import { MoviesList, MoviesListPropsType } from '../movies-list/movies-list';
 
-export function MyList(): JSX.Element {
+export function MyList({ movies }: MoviesListPropsType): JSX.Element {
   return (
     <div className="user-page">
       <Header />

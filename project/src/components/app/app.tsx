@@ -7,9 +7,9 @@ import { SignIn } from '../sign-in/sign-in';
 import {AuthorizationStatus, Routes} from '../../constants/constants';
 import { MoviePage } from '../movie-page/movie-page';
 import { MyList } from '../my-list/my-list';
-import { MoviePageReviews } from '../movie-page-reviews/movie-page-reviews';
 import { Player } from '../player/player';
 import { PrivateRoute } from '../private-route/private-route';
+import {AddReview} from '../add-review/add-review';
 
 type AppProps = {
   movies: Array<MoviePropsType>,
@@ -29,23 +29,30 @@ function App({movies, currentMovie, genres}: AppProps): JSX.Element {
           />
         </Route>
 
-        <Route path={Routes.FILM} exact>
-          <MoviePage />
-        </Route>
+        <Route path={Routes.FILM} exact component={MoviePage} />
 
         <Route path={Routes.SIGN_IN} exact component={SignIn}/>
 
-        <PrivateRoute path={Routes.MY_LIST} exact authorizationStatus={AuthorizationStatus.NotAuth}>
-          <MyList/>
+        <PrivateRoute
+          path={Routes.MY_LIST}
+          exact
+          authorizationStatus={AuthorizationStatus.NotAuth}
+        >
+          <MyList movies={movies}/>
         </PrivateRoute>
 
-        <PrivateRoute path={Routes.ADD_REVIEW} exact authorizationStatus={AuthorizationStatus.NotAuth}>
-          <MoviePageReviews/>
-        </PrivateRoute>
+        <PrivateRoute
+          path={Routes.ADD_REVIEW}
+          exact
+          authorizationStatus={AuthorizationStatus.Auth}
+          component={AddReview}
+        />
 
-        <Route path={Routes.PLAYER} exact>
-          <Player/>
-        </Route>
+        <Route
+          path={Routes.PLAYER}
+          exact
+          component={Player}
+        />
 
         <Route component={NotFound}/>
       </Switch>
