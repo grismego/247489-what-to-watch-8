@@ -5,7 +5,7 @@ export type MoviesListPropsType = {
   movies: MoviePropsType[]
 }
 
-type MoviesListState = number
+type MoviesListState = number;
 
 export function MoviesList({ movies }: MoviesListPropsType): JSX.Element {
   const [activeMovie, setActiveMovie] = useState<MoviesListState>(-1);

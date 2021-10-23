@@ -22,13 +22,13 @@ export type MoviePropsType = {
   isActive?: boolean,
 }
 
-type HandlerType = {
+type MovieCardPropsType = MoviePropsType & {
   updateActiveMovie: (id: number) => void,
 }
 
 const TIMEOUT = 1000;
 
-export function MovieCard(props: MoviePropsType & HandlerType): JSX.Element {
+export function MovieCard(props: MovieCardPropsType): JSX.Element {
   const {
     name,
     posterImage,
