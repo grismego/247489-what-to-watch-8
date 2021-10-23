@@ -10,12 +10,8 @@ type MoviesListState = number
 export function MoviesList({ movies }: MoviesListPropsType): JSX.Element {
   const [activeMovie, setActiveMovie] = useState<MoviesListState>(-1);
 
-  const handleMouseEnter = (id: number): void => {
+  const updateActiveMovie = (id: MoviesListState) => {
     setActiveMovie(id);
-  };
-
-  const handleMouseLeave = (): void => {
-    setActiveMovie(-1);
   };
 
   return (
@@ -26,8 +22,7 @@ export function MoviesList({ movies }: MoviesListPropsType): JSX.Element {
             {...movie}
             key={movie.id}
             isActive={activeMovie === movie.id}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            updateActiveMovie={updateActiveMovie}
           />
         ))
       }

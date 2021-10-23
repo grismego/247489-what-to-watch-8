@@ -9,9 +9,9 @@ import { RouteComponentProps } from 'react-router-dom';
 import { movies } from '../../mocks/movies';
 
 import { Header } from '../header/header';
-import {Redirect} from 'react-router';
+import { Redirect } from 'react-router';
 
-type stateForm = {
+type StateForm = {
   rating: string,
   reviewText: string
 }
@@ -23,7 +23,7 @@ type MatchParams = {
 export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Element {
   const { id } = match.params;
 
-  const [stateForm, setStateForm] = useState<stateForm>({
+  const [stateForm, setStateForm] = useState<StateForm>({
     rating: '',
     reviewText: '',
   });
