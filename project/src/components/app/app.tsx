@@ -4,12 +4,12 @@ import { MoviePropsType } from '../movie-card/movie-card';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { NotFound } from '../not-found/not-found';
 import { SignIn } from '../sign-in/sign-in';
-import {AuthorizationStatus, Routes} from '../../constants/constants';
+import { AuthorizationStatus, Routes } from '../../constants/constants';
 import { MoviePage } from '../movie-page/movie-page';
 import { MyList } from '../my-list/my-list';
 import { Player } from '../player/player';
 import { PrivateRoute } from '../private-route/private-route';
-import {AddReview} from '../add-review/add-review';
+import { AddReview } from '../add-review/add-review';
 
 type AppProps = {
   movies: Array<MoviePropsType>,
@@ -17,7 +17,7 @@ type AppProps = {
   genres: Array<GenreType>
 }
 
-function App({movies, currentMovie, genres}: AppProps): JSX.Element {
+function App({ movies, currentMovie, genres }: AppProps): JSX.Element {
   return (
     <Router>
       <Switch>

@@ -11,3 +11,5 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NotAuth = 'NOT_AUTH',
 }
+
+export const DEFAULT_GENRE = 'All Genres';

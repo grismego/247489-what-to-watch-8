@@ -1,4 +1,4 @@
-import { GenreType, Genres } from '../genres/genres';
+import Genres, { GenreType } from '../genres/genres';
 
 import { FilmCardMain } from '../movie-card-main/film-card-main';
 import { Footer } from '../footer/footer';

@@ -1,16 +1,8 @@
-export type GenreType = {
-  name: string,
-  isActive?: boolean
-}
+export type GenreType = any
 
-export function Genre({name, isActive = false}: GenreType): JSX.Element {
+export function Genre({ name }: any): JSX.Element {
   return (
-    <li className={
-      isActive
-        ? 'catalog__genres-item catalog__genres-item--active'
-        : 'catalog__genres-item'
-    }
-    >
+    <li className="catalog__genres-item">
       <a href="#" className="catalog__genres-link">{name}</a>
     </li>
   );
