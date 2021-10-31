@@ -1,44 +1,25 @@
-import { MouseEvent } from 'react';
-import { Dispatch } from '@reduxjs/toolkit';
 import { changeGenre } from '../../store/actions';
-import { connect, ConnectedProps } from 'react-redux';
 import { DEFAULT_GENRE } from '../../constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../store/reducer';
-export type GenreType = any;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeGenre(genre: string) {
-    dispatch(changeGenre(genre));
-  },
-});
+export function Genres(): JSX.Element {
+  const dispatch = useDispatch();
 
-const mapStateToProps = (state: State) => ({
-  genre: state.genre,
-});
+  const movies = useSelector((state: State) => state.movies);
+  const currentGenre = useSelector((state: State) => state.genre);
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export type GenresType = PropsFromRedux & {
-  genres: GenreType[]
-}
-
-export function Genres(props: GenresType): JSX.Element {
-  const { genres, onChangeGenre } = props;
-
-  const data = [DEFAULT_GENRE, ...new Set(genres.map((it) => it.name))];
-
-  const handleChange = (genre: string) => (evt: MouseEvent) => {
-    evt.preventDefault();
-    onChangeGenre(genre);
-  };
+  const genres = [DEFAULT_GENRE, ...new Set(movies.map((it) => it.genre))] as string[];
 
   return (
     <ul className="catalog__genres-list">
-      {data.map((genre) => (
-        <li className="catalog__genres-item" key={genre}
-          onClick={handleChange(genre)}
+      {genres.map((genre) => (
+        <li className={`catalog__genres-item ${genre === currentGenre && 'catalog__genres-item--active'}`}
+          key={genre}
+          onClick={(evt) => {
+            evt.preventDefault();
+            dispatch(changeGenre(genre));
+          }}
         >
           <a href="#" className="catalog__genres-link">{genre}</a>
         </li>
@@ -47,4 +28,4 @@ export function Genres(props: GenresType): JSX.Element {
   );
 }
 
-export default connector(Genres);
+export default Genres;

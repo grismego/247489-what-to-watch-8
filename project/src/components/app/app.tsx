@@ -1,4 +1,3 @@
-import { GenreType } from '../genres/genres';
 import { MainPage } from '../main-page/main-page';
 import { MoviePropsType } from '../movie-card/movie-card';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -14,10 +13,9 @@ import { AddReview } from '../add-review/add-review';
 type AppProps = {
   movies: Array<MoviePropsType>,
   currentMovie: MoviePropsType,
-  genres: Array<GenreType>
 }
 
-function App({ movies, currentMovie, genres }: AppProps): JSX.Element {
+function App({ movies, currentMovie}: AppProps): JSX.Element {
   return (
     <Router>
       <Switch>
@@ -25,7 +23,6 @@ function App({ movies, currentMovie, genres }: AppProps): JSX.Element {
           <MainPage
             movies={movies}
             currentMovie={currentMovie}
-            genres={genres}
           />
         </Route>
 
