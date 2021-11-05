@@ -2,6 +2,7 @@ import { changeGenre } from '../../store/actions';
 import { DEFAULT_GENRE } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../store/reducer';
+import classNames from 'classnames';
 
 export function Genres(): JSX.Element {
   const dispatch = useDispatch();
@@ -14,14 +15,21 @@ export function Genres(): JSX.Element {
   return (
     <ul className="catalog__genres-list">
       {genres.map((genre) => (
-        <li className={`catalog__genres-item ${genre === currentGenre && 'catalog__genres-item--active'}`}
+        <li
+          className={classNames('catalog__genres-item', {
+            'catalog__genres-item--active': genre === currentGenre,
+          })}
           key={genre}
-          onClick={(evt) => {
-            evt.preventDefault();
-            dispatch(changeGenre(genre));
-          }}
         >
-          <a href="#" className="catalog__genres-link">{genre}</a>
+          <a href="#"
+            className="catalog__genres-link"
+            onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(changeGenre(genre));
+            }}
+          >
+            {genre}
+          </a>
         </li>
       ))}
     </ul>
