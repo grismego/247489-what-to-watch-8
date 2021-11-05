@@ -12,4 +12,8 @@ export enum AuthorizationStatus {
   NotAuth = 'NOT_AUTH',
 }
 
+export enum ApiRoute {
+  Movies= '/films'
+}
+
 export const DEFAULT_GENRE = 'All Genres';

@@ -15,3 +15,10 @@ export const requireAuthorization = (status: string) => ({
   type: '',
   payload: status,
 } as const);
+
+export const getMovies = (movies: MoviePropsType[]) => ({
+  type: ActionType.GET_MOVIES,
+  payload: {
+    movies,
+  },
+} as const);

@@ -9,6 +9,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createAPI } from './services/api';
 import { requireAuthorization } from './store/actions';
 import thunk from 'redux-thunk';
+import {ThunkAppDispatch} from './types/actions';
+import {fetchMovies} from './store/api-actions';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization('fales')),
@@ -20,6 +22,8 @@ const store = createStore(
     applyMiddleware(thunk.withExtraArgument(api)),
   ),
 );
+
+(store.dispatch as ThunkAppDispatch)(fetchMovies());
 
 ReactDOM.render(
   <React.StrictMode>

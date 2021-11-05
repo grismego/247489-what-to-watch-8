@@ -1,6 +1,6 @@
 import { MainPage } from '../main-page/main-page';
 import { MoviePropsType } from '../movie-card/movie-card';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { NotFound } from '../not-found/not-found';
 import { SignIn } from '../sign-in/sign-in';
 import { AuthorizationStatus, Routes } from '../../constants/constants';
@@ -9,6 +9,7 @@ import { MyList } from '../my-list/my-list';
 import { Player } from '../player/player';
 import { PrivateRoute } from '../private-route/private-route';
 import { AddReview } from '../add-review/add-review';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   movies: Array<MoviePropsType>,
@@ -17,7 +18,7 @@ type AppProps = {
 
 function App({ movies, currentMovie}: AppProps): JSX.Element {
   return (
-    <Router>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={Routes.MAIN}>
           <MainPage
@@ -54,7 +55,7 @@ function App({ movies, currentMovie}: AppProps): JSX.Element {
         <Route component={NotFound}/>
       </Switch>
 
-    </Router>
+    </BrowserRouter>
   );
 }
 

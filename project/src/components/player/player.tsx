@@ -1,6 +1,7 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { movies } from '../../mocks/movies';
 import { Redirect } from 'react-router';
+import { useSelector } from 'react-redux';
+import { getMovies } from '../../selectors/films';
 
 type MatchParams = {
   id: string;
@@ -8,6 +9,8 @@ type MatchParams = {
 
 export function Player({ match }: RouteComponentProps<MatchParams>): JSX.Element {
   const { id } = match.params;
+
+  const movies = useSelector(getMovies);
 
   const currentMovie = movies[+id];
 
