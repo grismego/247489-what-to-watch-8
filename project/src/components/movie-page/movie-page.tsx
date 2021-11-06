@@ -4,6 +4,10 @@ import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { useSelector} from 'react-redux';
 import { getMovies } from '../../selectors/films';
+import { Tabs } from '../tabs/tabs';
+import { MoviePageReviews } from '../movie-page-reviews/movie-page-reviews';
+import { MoviePageDetails } from '../movie-page-details/movie-page-details';
+import { MoviePageOverview } from '../movie-page-overview/movie-page-overview';
 
 type MatchParams = {
   id: string;
@@ -71,36 +75,13 @@ export function MoviePage({ match }: RouteComponentProps<MatchParams>): JSX.Elem
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{currentMovie.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{currentMovie.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{currentMovie.description}</p>
-
-                <p className="film-card__director"><strong>{currentMovie.director}</strong></p>
-
-                <p className="film-card__starring"><strong>{currentMovie.starring.join(', ')}</strong></p>
-              </div>
+              <Tabs>
+                <MoviePageOverview label="Overview" film={currentMovie}/>
+                <MoviePageReviews label="Reviews" film={currentMovie}/>
+                <MoviePageDetails label="Details" film={currentMovie}/>
+              </Tabs>
             </div>
+
           </div>
         </div>
       </section>
