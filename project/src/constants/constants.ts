@@ -10,10 +10,14 @@ export enum Routes {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NotAuth = 'NOT_AUTH',
+  Unknow = 'UNKNOW'
 }
 
 export enum ApiRoute {
-  Movies= '/films'
+  Movies = '/films',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export const DEFAULT_GENRE = 'All Genres';

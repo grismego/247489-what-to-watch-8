@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
-import { State } from '../store/reducer';
+import { MoviePropsType } from '../components/movie-card/movie-card';
+import { NameSpace, RootState } from '../store/root-reducer';
 
-const getMovies = (state: State) => state.movies;
+const getMovies = (state: RootState): MoviePropsType[] => state[NameSpace.Data].movies;
 
-const getGenre = (state: State) => state.genre;
+const getGenre = (state: RootState): string => state[NameSpace.Data].genre;
 
 const getFilteredMovies = createSelector(
   [getMovies, getGenre],

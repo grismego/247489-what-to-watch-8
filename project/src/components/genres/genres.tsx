@@ -1,13 +1,13 @@
 import { changeGenre } from '../../store/actions';
 import { DEFAULT_GENRE } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { State } from '../../store/reducer';
+import { NameSpace, RootState } from '../../store/root-reducer';
 
 export function Genres(): JSX.Element {
   const dispatch = useDispatch();
 
-  const movies = useSelector((state: State) => state.movies);
-  const currentGenre = useSelector((state: State) => state.genre);
+  const movies = useSelector((state: RootState) => state[NameSpace.Data].movies);
+  const currentGenre = useSelector((state: RootState) => state[NameSpace.Data].genre);
 
   const genres = [DEFAULT_GENRE, ...new Set(movies.map((it) => it.genre))] as string[];
 
