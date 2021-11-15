@@ -1,4 +1,4 @@
-import { GenreType, Genres } from '../genres/genres';
+import Genres from '../genres/genres';
 
 import { FilmCardMain } from '../movie-card-main/film-card-main';
 import { Footer } from '../footer/footer';
@@ -8,14 +8,12 @@ import { MoviesList } from '../movies-list/movies-list';
 type MainPageProps = {
   movies: MoviePropsType[],
   currentMovie: MoviePropsType,
-  genres: GenreType[]
 }
 
 export function MainPage(
   {
     movies,
     currentMovie,
-    genres,
   }: MainPageProps): JSX.Element {
 
   return (
@@ -26,7 +24,7 @@ export function MainPage(
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <Genres genres={genres} />
+          <Genres />
 
           <MoviesList movies={movies} />
 

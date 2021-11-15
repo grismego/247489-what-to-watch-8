@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { VideoPlayer } from '../video-player/video-player';
+import { memo } from 'react';
 
 export type MoviePropsType = {
   id: number,
@@ -28,7 +29,7 @@ type MovieCardPropsType = MoviePropsType & {
 
 const TIMEOUT = 1000;
 
-export function MovieCard(props: MovieCardPropsType): JSX.Element {
+function MovieCard(props: MovieCardPropsType): JSX.Element {
   const {
     name,
     posterImage,
@@ -65,3 +66,5 @@ export function MovieCard(props: MovieCardPropsType): JSX.Element {
     </article>
   );
 }
+
+export default memo(MovieCard);

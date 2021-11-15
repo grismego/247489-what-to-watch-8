@@ -1,8 +1,9 @@
 import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom';
-import { movies } from '../../mocks/movies';
 import { Redirect } from 'react-router';
+import { useSelector} from 'react-redux';
+import { getMovies } from '../../selectors/films';
 
 type MatchParams = {
   id: string;
@@ -11,6 +12,7 @@ type MatchParams = {
 export function MoviePage({ match }: RouteComponentProps<MatchParams>): JSX.Element {
   const history = useHistory();
 
+  const movies = useSelector(getMovies);
   const { id } = match.params;
 
   const currentMovie = movies[+id];
