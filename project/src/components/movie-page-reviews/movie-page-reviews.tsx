@@ -1,95 +1,55 @@
-import { Tab } from  '../../types/tab';
-import { MoviePropsType } from '../movie-card/movie-card';
+import { UserCommentType } from '../../types/movie';
+import { formatDatetime, formatHumanizedDate } from '../../utils/common';
 
-type MoviePageProps = Tab & {
-  film: MoviePropsType
-}
 
-export function MoviePageReviews({ film }: MoviePageProps): JSX.Element {
+export function MoviePageReviews({ currentMovieComments }: any): JSX.Element {
+  const middleIndex = Math.ceil(currentMovieComments.length / 2);
+  const [firstColumnReviews, secondColumnReviews] = [currentMovieComments.slice(0, middleIndex), currentMovieComments.slice(middleIndex)];
+
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">{film.description}</p>
+        {firstColumnReviews.map((review: UserCommentType) => {
+          const { comment, date, id, rating, user: { name } } = review;
 
-            <footer className="review__details">
-              <cite className="review__author">{film.director}</cite>
-              <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
-            </footer>
-          </blockquote>
+          return (
+            <div className="review" key={id}>
+              <blockquote className="review__quote">
+                <p className="review__text">{comment}</p>
 
-          <div className="review__rating">{film.rating}</div>
-        </div>
+                <footer className="review__details">
+                  <cite className="review__author">{name}</cite>
+                  <time className="review__date" dateTime={formatDatetime(date)}>{formatHumanizedDate(date)}</time>
+                </footer>
+              </blockquote>
 
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">Andersons films are too precious for some, but for those of us willing to lose ourselves in them, theyre a delight.
-              The Grand Budapest Hotel is no different, except that he has added a hint of gravitas to the mix, improving the recipe.
-            </p>
-
-            <footer className="review__details">
-              <cite className="review__author">Bill Goodykoontz</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,0</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">I didn t find it amusing, and while I can appreciate the creativity, its an hour and 40 minutes I wish I could take back.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Amanda Greever</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,0</div>
-        </div>
+              <div className="review__rating">{rating}</div>
+            </div>
+          );
+        })}
       </div>
+
       <div className="film-card__reviews-col">
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.</p>
+        {secondColumnReviews.map((review: UserCommentType) => {
+          const { comment, date, id, rating, user: { name } } = review;
 
-            <footer className="review__details">
-              <cite className="review__author">Matthew Lickona</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
+          return (
+            <div className="review" key={id}>
+              <blockquote className="review__quote">
+                <p className="review__text">{comment}</p>
 
-          <div className="review__rating">7,2</div>
-        </div>
+                <footer className="review__details">
+                  <cite className="review__author">{name}</cite>
+                  <time className="review__date" dateTime={formatDatetime(date)}>{formatHumanizedDate(date)}</time>
+                </footer>
+              </blockquote>
 
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">7,6</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">7,0</div>
-        </div>
+              <div className="review__rating">{rating}</div>
+            </div>
+          );
+        })}
       </div>
+
     </div>
   );
 }

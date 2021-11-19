@@ -1,52 +1,30 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { VideoPlayer } from '../video-player/video-player';
-import { memo } from 'react';
-
-export type MoviePropsType = {
-  id: number,
-  name: string,
-  posterImage: string,
-  previewImage: string,
-  backgroundImage: string,
-  backgroundColor: string,
-  videoLink: string,
-  previewVideoLink: string,
-  description: string,
-  rating: number,
-  scoresCount: number,
-  director: string,
-  starring: string[],
-  runTime: number,
-  genre: string | string[],
-  released: number,
-  isFavorite: boolean,
-  isActive?: boolean,
-}
-
-type MovieCardPropsType = MoviePropsType & {
-  updateActiveMovie: (id: number) => void,
-}
+import { memo, useState } from 'react';
+import { MoviePropsType } from '../../types/movie';
 
 const TIMEOUT = 1000;
 
-function MovieCard(props: MovieCardPropsType): JSX.Element {
+function MovieCard(props: MoviePropsType): JSX.Element {
   const {
     name,
-    posterImage,
+    previewImage,
     id,
     previewVideoLink,
-    updateActiveMovie,
-    isActive,
   } = props;
+
+  const [isPlaying, setPlaying] = useState(false);
+
+  const history = useHistory();
 
   let timer: ReturnType<typeof setTimeout>;
 
   const handleMouseEnter = () => {
-    timer = setTimeout(() => updateActiveMovie(id), TIMEOUT);
+    timer = setTimeout(() => setPlaying(true), TIMEOUT);
   };
 
   const handleMouseLeave = () => {
-    updateActiveMovie(-1);
+    setPlaying(false);
     clearTimeout(timer);
   };
 
@@ -54,11 +32,14 @@ function MovieCard(props: MovieCardPropsType): JSX.Element {
     <article className="small-film-card catalog__films-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => {
+        history.push(`/films/${id}`);
+      }}
     >
       <div className="small-film-card__image">
-        {isActive
-          ? <VideoPlayer src={previewVideoLink} poster={posterImage} autoplay />
-          : <img src={posterImage} alt={name} width="280" height="175" /> }
+        {isPlaying
+          ? <VideoPlayer src={previewVideoLink} poster={previewImage} autoplay />
+          : <img src={previewImage} alt={name} width="280" height="175" /> }
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>

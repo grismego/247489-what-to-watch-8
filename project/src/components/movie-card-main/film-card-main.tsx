@@ -1,21 +1,15 @@
-import { Header } from '../header/header';
+import { useHistory } from 'react-router';
+import { MoviePropsType } from '../../types/movie';
+import { AddToMyListButton } from '../add-to-my-list/add-to-my-list';
+import { User } from '../user/user';
 
 export type FilmCardType = {
-  posterImage: string,
-  name: string,
-  genre: string | string[],
-  released: number,
-  backgroundImage: string
+  movie: MoviePropsType
 }
 
-export function FilmCardMain(
-  {
-    posterImage,
-    name,
-    genre,
-    released,
-    backgroundImage,
-  }: FilmCardType): JSX.Element {
+export function FilmCardMain({ movie }: FilmCardType): JSX.Element {
+  const history = useHistory();
+  const { backgroundImage, name, posterImage, genre, released, id } = movie;
 
   return (
     <section className="film-card">
@@ -25,7 +19,18 @@ export function FilmCardMain(
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <Header/>
+      <header className="page-header film-card__head">
+        <div className="logo">
+          <a className="logo__link">
+            <span className="logo__letter logo__letter--1">W</span>
+            <span className="logo__letter logo__letter--2">T</span>
+            <span className="logo__letter logo__letter--3">W</span>
+          </a>
+        </div>
+
+        <User />
+
+      </header>
 
       <div className="film-card__wrap">
         <div className="film-card__info">
@@ -42,19 +47,15 @@ export function FilmCardMain(
               <span className="film-card__year">{released}</span>
             </p>
 
+
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
+              <button className="btn btn--play film-card__button" type="button" onClick={() => history.push(`/player/${id}`)}>
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list film-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
+              <AddToMyListButton {...movie} />
             </div>
           </div>
         </div>

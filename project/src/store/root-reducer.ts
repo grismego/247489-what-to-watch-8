@@ -3,12 +3,12 @@ import { moviesReducer } from './movies/reducer';
 import { userReducer } from './user/reducer';
 
 export enum NameSpace {
-  Data = 'Data',
+  Movie = 'Movie',
   User = 'User',
 }
 
 export const rootReducer = combineReducers({
-  [NameSpace.Data]: moviesReducer,
+  [NameSpace.Movie]: moviesReducer,
   [NameSpace.User]: userReducer,
 });
 

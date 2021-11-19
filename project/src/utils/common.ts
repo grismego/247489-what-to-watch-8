@@ -1,11 +1,21 @@
-const HOUR = 60;
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 
-function normalizedTime(duration: number): string {
-  const hours = Math.floor(duration / HOUR);
-  const minutes = duration % HOUR;
-  return `${hours}h ${minutes}m`;
-}
+const HOUR = 3600;
+
+const normalizedTime = (runtime: number): string => dayjs.duration(runtime, 'minutes').format('H[h] mm[m]');
+const formatDatetime = (date: Date): string => dayjs(date).format('YYYY-MM-DD');
+const formatHumanizedDate = (date: Date): string => dayjs(date).format('MMMM D, YYYY');
+
+const formatRemainingTime = (remainingTime: number): string => {
+  const format = remainingTime >= HOUR ? '-HH:mm:ss' : '-mm:ss';
+  return dayjs.duration(remainingTime, 'seconds').format(format);
+};
 
 export {
-  normalizedTime
+  normalizedTime,
+  formatDatetime,
+  formatHumanizedDate,
+  formatRemainingTime
 };

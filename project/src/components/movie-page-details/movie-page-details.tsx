@@ -1,6 +1,7 @@
 import { Tab } from  '../../types/tab';
-import { MoviePropsType } from '../movie-card/movie-card';
 import { normalizedTime } from '../../utils/common';
+import { Fragment } from 'react';
+import { MoviePropsType } from '../../types/movie';
 
 type MoviePageProps = Tab & {
   film: MoviePropsType
@@ -18,7 +19,7 @@ export function MoviePageDetails({ film }: MoviePageProps): JSX.Element {
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
             {film.starring.map((star) => (
-              <>{star} <br/> </>
+              <Fragment key={star}>{star} <br/> </Fragment>
             ))}
           </span>
         </p>

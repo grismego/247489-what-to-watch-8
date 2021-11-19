@@ -1,31 +1,42 @@
 import { changeGenre } from '../../store/actions';
 import { DEFAULT_GENRE } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { NameSpace, RootState } from '../../store/root-reducer';
+import classNames from 'classnames';
+import { getMovies, getGenre } from '../../store/movies/selectors';
 
-export function Genres(): JSX.Element {
+type GenresType = {
+  resetCurrentAmout: () => void
+}
+
+export function Genres({ resetCurrentAmout }: GenresType): JSX.Element {
   const dispatch = useDispatch();
 
-  const movies = useSelector((state: RootState) => state[NameSpace.Data].movies);
-  const currentGenre = useSelector((state: RootState) => state[NameSpace.Data].genre);
+  const movies = useSelector(getMovies);
+  const currentGenre = useSelector(getGenre);
 
   const genres = [DEFAULT_GENRE, ...new Set(movies.map((it) => it.genre))] as string[];
 
   return (
     <ul className="catalog__genres-list">
       {genres.map((genre) => (
-        <li className={`catalog__genres-item ${genre === currentGenre && 'catalog__genres-item--active'}`}
-          key={genre}
-          onClick={(evt) => {
-            evt.preventDefault();
-            dispatch(changeGenre(genre));
-          }}
+        <li className={
+          classNames('catalog__genres-item', {
+            'catalog__genres-item--active': genre === currentGenre,
+          })
+        }
+        key={genre}
         >
-          <a href="#" className="catalog__genres-link">{genre}</a>
+          <a href="#" className="catalog__genres-link"
+            onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(changeGenre(genre));
+              resetCurrentAmout();
+            }}
+          >
+            {genre}
+          </a>
         </li>
       ))}
     </ul>
   );
 }
-
-export default Genres;
