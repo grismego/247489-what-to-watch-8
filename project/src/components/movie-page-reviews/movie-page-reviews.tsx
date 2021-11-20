@@ -1,8 +1,12 @@
 import { UserCommentType } from '../../types/movie';
 import { formatDatetime, formatHumanizedDate } from '../../utils/common';
+import { Tab } from  '../../types/tab';
 
+type ReviewsPageProps = Tab & {
+  currentMovieComments: UserCommentType[],
+}
 
-export function MoviePageReviews({ currentMovieComments }: any): JSX.Element {
+export function MoviePageReviews({currentMovieComments}: ReviewsPageProps): JSX.Element {
   const middleIndex = Math.ceil(currentMovieComments.length / 2);
   const [firstColumnReviews, secondColumnReviews] = [currentMovieComments.slice(0, middleIndex), currentMovieComments.slice(middleIndex)];
 
