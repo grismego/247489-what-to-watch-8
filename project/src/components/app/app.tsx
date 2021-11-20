@@ -6,22 +6,12 @@ import { AuthorizationStatus, Routes } from '../../constants/constants';
 import { MoviePage } from '../movie-page/movie-page';
 import { MyList } from '../my-list/my-list';
 import { Player } from '../player/player';
-import { PrivateRoute, PrivateRouteActionType } from '../private-route/private-route';
+import { PrivateRoute } from '../private-route/private-route';
 import { AddReview } from '../add-review/add-review';
 import browserHistory from '../../browser-history';
 import { useSelector } from 'react-redux';
 import { getAuthStatus } from '../../store/user/selectors';
-
-function Loader():JSX.Element {
-  // const authStatus = useSelector(getAuthStatus);
-
-  return (
-    <div>
-      Loading ....
-    </div>
-  );
-
-}
+import { Loader } from '../loader/loader';
 
 function App(): JSX.Element {
 
@@ -42,15 +32,15 @@ function App(): JSX.Element {
           <MoviePage />
         </Route>
 
-        <PrivateRoute path={Routes.SignIn()} exact accessType={PrivateRouteActionType.Guest}>
+        <Route exact path={Routes.SignIn()}>
           <SignIn />
-        </PrivateRoute>
+        </Route>
 
-        <PrivateRoute exact path={Routes.MyList()} accessType={PrivateRouteActionType.User}>
+        <PrivateRoute exact path={Routes.MyList()}>
           <MyList />
         </PrivateRoute>
 
-        <PrivateRoute exact path={Routes.AddReview()} accessType={PrivateRouteActionType.User}>
+        <PrivateRoute exact path={Routes.AddReview()}>
           <AddReview />
         </PrivateRoute>
 
