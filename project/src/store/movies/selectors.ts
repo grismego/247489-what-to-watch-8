@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { NameSpace, RootState } from '../../store/root-reducer';
-import { CommentType, MoviePropsType, UserCommentType } from '../../types/movie';
+import { MoviePropsType, UserCommentType } from '../../types/movie';
 
 const getMovies = (state: RootState): MoviePropsType[] => state[NameSpace.Movie].movies;
 

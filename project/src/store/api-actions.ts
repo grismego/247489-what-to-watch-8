@@ -13,7 +13,7 @@ import { getMovies,
 } from './actions';
 
 import { ApiRoute, AuthorizationStatus, NewComemntStatus, Routes} from '../constants/constants';
-import { AuthData  } from '../types/user';
+import { AuthData } from '../types/user';
 import { saveToken, dropToken } from '../services/token';
 import { CommentType, ServerMovie, UserCommentType } from '../types/movie';
 import { adapterMovieToClient } from '../services/adapter';
