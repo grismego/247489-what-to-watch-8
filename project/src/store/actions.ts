@@ -30,12 +30,6 @@ export const requireLogout = () => ({
   type: ActionType.LOG_OUT,
 } as const);
 
-export const logIn = (userInfo: any) => ({
-  type: ActionType.LOG_IN,
-  payload: userInfo,
-} as const);
-
-
 export const setUserInfo = (userInfo: UserInfo) => ({
   type: ActionType.SET_USER_INFO,
   payload: {

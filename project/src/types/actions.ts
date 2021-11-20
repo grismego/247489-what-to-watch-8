@@ -12,7 +12,6 @@ import {
   getMovies,
   requireAuthorization,
   requireLogout,
-  logIn,
   redirectToRoute,
   setUserInfo,
   loadCurrentMovie,
@@ -45,7 +44,6 @@ export type Actions =
   | ReturnType<typeof requireAuthorization>
   | ReturnType<typeof getMovies>
   | ReturnType<typeof requireLogout>
-  | ReturnType<typeof logIn>
   | ReturnType<typeof redirectToRoute>
   | ReturnType<typeof setUserInfo>
   | ReturnType<typeof loadCurrentMovie>

@@ -18,8 +18,6 @@ export const userReducer = (state = initialState, action: Actions): userState =>
   switch (action.type) {
     case ActionType.REQUIRE_AUTH:
       return { ...state, authStatus: action.payload };
-    case ActionType.LOG_IN:
-      return { ...state, authStatus: action.payload };
     case ActionType.LOG_OUT:
       return { ...state, authStatus: AuthorizationStatus.NotAuth };
     case ActionType.SET_USER_INFO:
