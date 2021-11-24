@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router';
 import { MoviePropsType } from '../../types/movie';
-import { AddToMyListButton } from '../add-to-my-list/add-to-my-list';
+import { AddToMyListButton } from '../add-to-my-list-button/add-to-my-list-button';
 import { User } from '../user/user';
 
 export type FilmCardType = {

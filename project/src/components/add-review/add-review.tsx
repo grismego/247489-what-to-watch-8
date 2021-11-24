@@ -25,6 +25,7 @@ type ParamsType = {
   id: string;
 }
 
+const RATING_STARS_LENGTH = 10;
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 400;
 
@@ -110,7 +111,7 @@ export function AddReview(): JSX.Element {
         <form action="#" className="add-review__form" onSubmit={handleSubmitForm}>
           <div className="rating">
             <div className="rating__stars">
-              { Array.from({length: 10}, (_, i) => i + 1)
+              { Array.from({length: RATING_STARS_LENGTH}, (_, i) => i + 1)
                 .reverse()
                 .map((index) => (
                   <Fragment key={index}>

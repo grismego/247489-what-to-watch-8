@@ -1,7 +1,6 @@
 import { changeGenre } from '../../store/actions';
 import { DEFAULT_GENRE } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
-// import classNames from 'classnames';
 import cn from 'classnames';
 import { getMovies, getGenre } from '../../store/movies/selectors';
 

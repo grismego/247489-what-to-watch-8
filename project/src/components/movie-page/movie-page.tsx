@@ -11,7 +11,7 @@ import { fetchComments, fetchMovie, fetchSimiliarMovies } from '../../store/api-
 import { MoviesList } from '../movies-list/movies-list';
 import { getAuthStatus } from '../../store/user/selectors';
 import { AuthorizationStatus, Routes } from '../../constants/constants';
-import { AddToMyListButton } from '../add-to-my-list/add-to-my-list';
+import { AddToMyListButton } from '../add-to-my-list-button/add-to-my-list-button';
 import { User } from '../user/user';
 
 type MatchParams = {
