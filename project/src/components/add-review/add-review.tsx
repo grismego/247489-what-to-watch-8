@@ -2,37 +2,50 @@ import {
   useState,
   ChangeEvent,
   SyntheticEvent,
-  Fragment
+  Fragment,
+  useEffect
 } from 'react';
 
-import { RouteComponentProps } from 'react-router-dom';
-import { movies } from '../../mocks/movies';
-
-import { Header } from '../header/header';
-import { Redirect } from 'react-router';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentMovie } from '../../store/movies/selectors';
+import { fetchMovie, postComments } from '../../store/api-actions';
+import { Link } from 'react-router-dom';
+import { User } from '../user/user';
+import { Routes } from '../../constants/constants';
+import { toast } from 'react-toastify';
+import { getFormLoadingStatus } from '../../store/user/selectors';
 
 type StateForm = {
   rating: string,
-  reviewText: string
+  comment: string
 }
 
-type MatchParams = {
+type ParamsType = {
   id: string;
 }
 
-export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Element {
-  const { id } = match.params;
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 400;
+
+
+export function AddReview(): JSX.Element {
+  const { id }: ParamsType = useParams();
+  const dispatch = useDispatch();
+
+  const isFormLoading = useSelector(getFormLoadingStatus);
 
   const [stateForm, setStateForm] = useState<StateForm>({
+    comment: '',
     rating: '',
-    reviewText: '',
   });
 
-  const currentMovie = movies[+id];
+  const currentMovie = useSelector(getCurrentMovie);
 
-  if (!currentMovie) {
-    return <Redirect to='/' />;
-  }
+  useEffect(() => {
+    dispatch(fetchMovie(id));
+  }, [dispatch, id]);
+
 
   const handleChangeControls = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const name = evt.target.name;
@@ -44,23 +57,52 @@ export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Elem
     }));
   };
 
+  const checkForm = () => {
+    if (!stateForm.rating) {
+      toast.warn('Поставьте оценку', { position: toast.POSITION.TOP_LEFT, hideProgressBar: false });
+      return false;
+    }
+
+    if ((stateForm.comment.length > MAX_COMMENT_LENGTH || stateForm.comment.length <= MIN_COMMENT_LENGTH)) {
+      toast.warn(`Комментарий должен быть не короче ${MIN_COMMENT_LENGTH} символов и не длиннее ${MAX_COMMENT_LENGTH} символов`, { position: toast.POSITION.TOP_LEFT, hideProgressBar: false });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmitForm = (evt: SyntheticEvent): void => {
     evt.preventDefault();
+    if (!checkForm()) {
+      return;
+    }
+    dispatch(postComments(id, stateForm));
   };
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={currentMovie.backgroundImage} alt="The Grand Budapest Hotel" />
+          <img src={currentMovie.backgroundImage} alt={currentMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header />
+        <header className="page-header">
+          <div className="logo">
+            <Link to={Routes.MainPage()} className="logo__link">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
+          </div>
+
+          <User />
+
+        </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={currentMovie.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={currentMovie.posterImage} alt={currentMovie.name} width="218" height="327" />
         </div>
       </div>
 
@@ -68,7 +110,7 @@ export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Elem
         <form action="#" className="add-review__form" onSubmit={handleSubmitForm}>
           <div className="rating">
             <div className="rating__stars">
-              { Array.from({length: 10}, (_, i) => i+1)
+              { Array.from({length: 10}, (_, i) => i + 1)
                 .reverse()
                 .map((index) => (
                   <Fragment key={index}>
@@ -91,13 +133,14 @@ export function AddReview({ match }: RouteComponentProps<MatchParams>): JSX.Elem
             <textarea
               className="add-review__textarea"
               onChange={handleChangeControls}
-              name="reviewText"
+              name="comment"
               id="review-text"
               placeholder="Review text"
-              value={stateForm.reviewText}
+              value={stateForm.comment}
+              disabled={isFormLoading}
             />
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button className="add-review__btn" type="submit" disabled={isFormLoading}>Post</button>
             </div>
 
           </div>

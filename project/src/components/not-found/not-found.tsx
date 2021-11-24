@@ -5,7 +5,7 @@ export function NotFound(): JSX.Element {
   return (
     <section>
       <h1>404: Not Found</h1>
-      <Link to={Routes.MAIN}>Back to main page</Link>
+      <Link to={Routes.MainPage()}>Back to main page</Link>
     </section>
   );
 }

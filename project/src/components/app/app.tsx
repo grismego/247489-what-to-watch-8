@@ -1,6 +1,5 @@
 import { MainPage } from '../main-page/main-page';
-import { MoviePropsType } from '../movie-card/movie-card';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router as BrowserRouter, Route, Switch } from 'react-router-dom';
 import { NotFound } from '../not-found/not-found';
 import { SignIn } from '../sign-in/sign-in';
 import { AuthorizationStatus, Routes } from '../../constants/constants';
@@ -9,52 +8,50 @@ import { MyList } from '../my-list/my-list';
 import { Player } from '../player/player';
 import { PrivateRoute } from '../private-route/private-route';
 import { AddReview } from '../add-review/add-review';
+import browserHistory from '../../browser-history';
+import { useSelector } from 'react-redux';
+import { getAuthStatus } from '../../store/user/selectors';
+import { Loader } from '../loader/loader';
 
-type AppProps = {
-  movies: Array<MoviePropsType>,
-  currentMovie: MoviePropsType,
-}
+function App(): JSX.Element {
 
-function App({ movies, currentMovie}: AppProps): JSX.Element {
+  const authStatus = useSelector(getAuthStatus);
+
+  if (authStatus === AuthorizationStatus.Unknow) {
+    <Loader />;
+  }
+
   return (
-    <Router>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path={Routes.MAIN}>
-          <MainPage
-            movies={movies}
-            currentMovie={currentMovie}
-          />
+        <Route exact path={Routes.MainPage()}>
+          <MainPage />
         </Route>
 
-        <Route path={Routes.FILM} exact component={MoviePage} />
+        <Route path={Routes.Movie()} exact>
+          <MoviePage />
+        </Route>
 
-        <Route path={Routes.SIGN_IN} exact component={SignIn}/>
+        <Route exact path={Routes.SignIn()}>
+          <SignIn />
+        </Route>
 
-        <PrivateRoute
-          path={Routes.MY_LIST}
-          exact
-          authorizationStatus={AuthorizationStatus.NotAuth}
-        >
-          <MyList movies={movies}/>
+        <PrivateRoute exact path={Routes.MyList()}>
+          <MyList />
         </PrivateRoute>
 
-        <PrivateRoute
-          path={Routes.ADD_REVIEW}
-          exact
-          authorizationStatus={AuthorizationStatus.Auth}
-          component={AddReview}
-        />
+        <PrivateRoute exact path={Routes.AddReview()}>
+          <AddReview />
+        </PrivateRoute>
 
-        <Route
-          path={Routes.PLAYER}
-          exact
-          component={Player}
-        />
+        <Route path={Routes.Player()} exact>
+          <Player />
+        </Route>
 
         <Route component={NotFound}/>
       </Switch>
 
-    </Router>
+    </BrowserRouter>
   );
 }
 

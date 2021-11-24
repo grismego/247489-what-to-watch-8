@@ -1,19 +1,33 @@
-import { Redirect, Route, RouteProps } from 'react-router';
+import { useSelector } from 'react-redux';
+import { Redirect, Route } from 'react-router';
 import { AuthorizationStatus } from '../../constants/constants';
 import { Routes } from '../../constants/constants';
+import { getAuthStatus } from '../../store/user/selectors';
 
-type PrivateRouteProps = RouteProps & {
-  authorizationStatus: typeof AuthorizationStatus[keyof typeof AuthorizationStatus],
+export enum PrivateRouteActionType {
+  User = 'User',
+  Guest = 'Guest',
 }
 
-export function PrivateRoute({ authorizationStatus, ...props }: PrivateRouteProps): JSX.Element {
+type PrivateRouteProps =  {
+  children: JSX.Element,
+  exact: boolean,
+  path: string,
+}
+
+export function PrivateRoute(props: PrivateRouteProps): JSX.Element {
+  const isAuth = useSelector(getAuthStatus);
+
+  const { children, exact, path } = props;
+
   return (
-    <Route { ...props }>
-      {
-        authorizationStatus === AuthorizationStatus.Auth
-          ? props.children
-          : <Redirect to={Routes.SIGN_IN} />
-      }
-    </Route>
-  );
+    <Route
+      exact={exact}
+      path={path}
+      render={() => (
+        isAuth === AuthorizationStatus.Auth
+          ? children
+          : <Redirect to={Routes.SignIn()}/>
+      )}
+    />);
 }

@@ -1,35 +1,24 @@
-import { useCallback, useState } from 'react';
-import MovieCard, { MoviePropsType } from '../movie-card/movie-card';
-import { useSelector } from 'react-redux';
-import { getFilteredMovies } from '../../selectors/films';
+import { MoviePropsType } from '../../types/movie';
+import MovieCard from '../movie-card/movie-card';
 
 export type MoviesListPropsType = {
   movies: MoviePropsType[],
-  genre?: string
+  moviesCount?: number
 }
-
-type MoviesListState = number;
-
-export function MoviesList({ movies, genre }: MoviesListPropsType): JSX.Element {
-  const [activeMovie, setActiveMovie] = useState<MoviesListState>(-1);
-
-  const updateActiveMovie = useCallback((id: MoviesListState) => {
-    setActiveMovie(id);
-  }, []);
-
-  const filteredMovies = useSelector(getFilteredMovies);
-
+export function MoviesList({ movies, moviesCount }: MoviesListPropsType): JSX.Element {
   return (
     <div className="catalog__films-list">
       {
-        filteredMovies.map((movie: MoviePropsType) => (
-          <MovieCard
-            {...movie}
-            key={movie.id}
-            isActive={activeMovie === movie.id}
-            updateActiveMovie={updateActiveMovie}
-          />
-        ))
+        movies.length ?
+          movies
+            .slice(0, moviesCount)
+            .map((movie: MoviePropsType) => (
+              <MovieCard
+                {...movie}
+                key={movie.id}
+              />
+            ))
+          : null
       }
     </div>
   );
