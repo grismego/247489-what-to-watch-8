@@ -1,7 +1,8 @@
 import { changeGenre } from '../../store/actions';
 import { DEFAULT_GENRE } from '../../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
+// import classNames from 'classnames';
+import cn from 'classnames';
 import { getMovies, getGenre } from '../../store/movies/selectors';
 
 type GenresType = {
@@ -20,7 +21,7 @@ export function Genres({ resetCurrentAmout }: GenresType): JSX.Element {
     <ul className="catalog__genres-list">
       {genres.map((genre) => (
         <li className={
-          classNames('catalog__genres-item', {
+          cn('catalog__genres-item', {
             'catalog__genres-item--active': genre === currentGenre,
           })
         }

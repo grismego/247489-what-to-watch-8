@@ -4,8 +4,8 @@ import { MoviePropsType } from '../../types/movie';
 
 
 enum isFavouriteStatus {
-  isFavourite = 1,
-  notFavourite = 0,
+  notFavourite,
+  isFavourite
 }
 
 const notInListButton = (
